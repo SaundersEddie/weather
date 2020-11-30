@@ -1,9 +1,11 @@
 import './App.css';
+import WeatherNavbar from '../src/components/WeatherNavbar/WeatherNavbar'
+
 
 function App() {
   return (
     <div className="container">
-        <h1>Bootstrap App</h1>
+        <WeatherNavbar />
     </div>
   );
 }
