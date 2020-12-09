@@ -1,35 +1,37 @@
-// '8a6cd7a64emsh3dd70caa88d8d20p193484jsn53fd404332c5'
+// server.js create for backend api calls
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import express from 'express';
+import bodyParser from 'body-parser';
+// import cors from 'cors';
+// import ourUsers from './routes/users.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-import axios from 'axios';
-console.log ('Axios imported');
+dotenv.config();
+const PORT = process.env.PORT || 3001;
+const ATLAS_URI = process.env.ATLAS_URI;
+console.log (ATLAS_URI);
 
-var options = {
-    method: 'GET',
-    url: 'https://weatherapi-com.p.rapidapi.com/forecast.json',
-    params: {q: 'London', days: '3'},
-    headers: {
-      'x-rapidapi-key': '8a6cd7a64emsh3dd70caa88d8d20p193484jsn53fd404332c5',
-      'x-rapidapi-host': 'weatherapi-com.p.rapidapi.com'
-    }
-  };
-  
-  axios.request(options).then(function (response) {
-      console.log(response.data);
-  }).catch(function (error) {
-      console.error(error);
-  });
+const app = express();
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+// app.use(cors());
 
-  var options = {
-    method: 'GET',
-    url: 'https://world-clock.p.rapidapi.com/json/est/now',
-    headers: {
-      'x-rapidapi-key': '8a6cd7a64emsh3dd70caa88d8d20p193484jsn53fd404332c5',
-      'x-rapidapi-host': 'world-clock.p.rapidapi.com'
-    }
-  };
-  
-  axios.request(options).then(function (response) {
-      console.log(response.data);
-  }).catch(function (error) {
-      console.error(error);
-  });
+if (process.env.NODE_ENV === "production") {
+        app.use(
+                "/static",
+                express.static(path.join(__dirname, "../client/build/static"))
+        );
+        app.get("/", (req, res) => {
+                res.sendFile(path.join(__dirname, "../client/build/"));
+        });
+}
+
+// app.use('/users', ourUsers);
+
+mongoose.connect(ATLAS_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+        .then(() => app.listen(PORT, () => console.log(`API Server listening on ${PORT}`)))
+        .catch((error) => console.log("An Error Occurred: ", error.message));
