@@ -13,6 +13,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const PORT = process.env.PORT || 3001;
 const ATLAS_URI = process.env.ATLAS_URI;
+console.log (process.env.RAPID_API_KEY);
 console.log (ATLAS_URI);
 
 const app = express();
