@@ -29,10 +29,13 @@
   "homepage": "https://github.com/SaundersEddie/weather#readme",
   "dependencies": {
     "axios": "^0.21.0",
+    "concurrently": "^5.3.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "if-env": "^1.0.4",
-    "mongoose": "^5.10.16",
-    "reactstrap": "^8.7.1"
+    "mongoose": "^5.10.16"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
