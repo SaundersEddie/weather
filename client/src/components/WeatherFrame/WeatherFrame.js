@@ -3,7 +3,9 @@ import { Button, Form, FormGroup } from 'reactstrap';
 
 const APITEST = async () => {
     // Pull weather test here
-    const my_API = '/weather';
+    const myQuery='Washington DC,1'
+    const my_API = `/weather/${myQuery}`;
+
     const response = await fetch (my_API);
     const json = await response.json();
     console.log (json);
@@ -27,4 +29,4 @@ const WeatherFrame = () => {
     )
 }
 
-export default WeatherFrame;
+export default WeatherFrame; 

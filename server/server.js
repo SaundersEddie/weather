@@ -30,11 +30,18 @@ if (process.env.NODE_ENV === "production") {
         });
 }
 
-app.get('/weather', async (request, response) => {
+app.get('/weather/:myQuery', async (request, response) => {
         // console.log ("Weather API: ",WEATHER_API);
-       const fetch_response = await fetch(WEATHER_API);
-       const json = await fetch_response.json();
-       response.json(json);
+        // console.log (request);
+        const myQuery = request.params.myQuery.split(',');
+        console.log ("myQuery is: ",myQuery);        
+        const myLoc = myQuery[0];
+        const myDays = myQuery[1];
+        const WEATHER_URL = `${WEATHER_API}q=${myLoc}&days=${myDays}`;
+        console.log (WEATHER_URL);
+        const fetch_response = await fetch(WEATHER_URL);
+        const json = await fetch_response.json();
+        response.json(json);
 });
 
 
