@@ -1,10 +1,11 @@
 // server.js create for backend api calls
-import axios from 'axios';
+// import axios from 'axios';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import express from 'express';
+import express, { response } from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
+import fetch from 'node-fetch';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,7 +13,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const PORT = process.env.PORT || 3001;
 const ATLAS_URI = process.env.ATLAS_URI;
-console.log (process.env.WEATHER_API_KEY);
+const WEATHER_API = process.env.WEATHER_API;
 console.log (ATLAS_URI);
 
 const app = express();
@@ -29,9 +30,11 @@ if (process.env.NODE_ENV === "production") {
         });
 }
 
-
-app.get('/weather', (req, res) => {
-        console.log ('fnork');
+app.get('/weather', async (request, response) => {
+        // console.log ("Weather API: ",WEATHER_API);
+       const fetch_response = await fetch(WEATHER_API);
+       const json = await fetch_response.json();
+       response.json(json);
 });
 
 
