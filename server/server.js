@@ -14,7 +14,6 @@ dotenv.config();
 const PORT = process.env.PORT || 3001;
 const ATLAS_URI = process.env.ATLAS_URI;
 const WEATHER_API = process.env.WEATHER_API;
-console.log (ATLAS_URI);
 
 const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));

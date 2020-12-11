@@ -3,12 +3,18 @@ import { Button, Form, FormGroup } from 'reactstrap';
 
 const APITEST = async () => {
     // Pull weather test here
-    const myQuery='Washington DC,1'
+    const myQuery='27603,1'
     const my_API = `/weather/${myQuery}`;
 
     const response = await fetch (my_API);
     const json = await response.json();
     console.log (json);
+
+    if (typeof json.alert.headline !== "undefined") {
+        console.log (json.alert.headline)
+    } else {
+        console.log ("No Alerts");
+    }
 
 }
 const WeatherFrame = () => {
