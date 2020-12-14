@@ -1,29 +1,14 @@
-// import e from 'express';
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Button, Form, FormGroup } from 'reactstrap';
-
-const APITEST = async () => {
-    // Pull weather test here
-    const myQuery='27603,1'
-    const my_API = `/weather/${myQuery}`;
-
-    const response = await fetch (my_API);
-    const json = await response.json();
-    console.log (json);
-
-    if (typeof json.alert.headline !== "undefined") {
-        console.log (json.alert.headline)
-    } else {
-        console.log ("No Alerts");
-    }
-
-}
 
 export default class weatherFrame extends Component {
     constructor (props) {
     super (props);
 
+
     this.onChangeOurSearch = this.onChangeOurSearch.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
         ourSearch: ''
@@ -36,7 +21,7 @@ export default class weatherFrame extends Component {
         })
     }
 
-    onChanmgeOurSearch(e) {
+    onChangeOurSearch(e) {
         this.setState({
             ourSearch: e.target.value
         })
@@ -44,12 +29,9 @@ export default class weatherFrame extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        const thisSearch = {
-            ourSearch: this.state.ourSearch
-        }
+        axios.get(`/weather/${this.state.ourSearch}`)
+            .then (res => console.log (res.data));
     }
-
-    // console.log ('thisSearch: ',thisSearch);
 
     render() {
         return (
@@ -57,10 +39,10 @@ export default class weatherFrame extends Component {
             <h1>Weather Search</h1>
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                    <label>Location: </label>
+                    <label>Location:  </label>
                     <input
                         type="text"
-                        className = "formControl"
+                        className = "form-Control"
                         value={this.state.ourSearch}
                         onChange={this.onChangeOurSearch}
                         />
@@ -77,24 +59,3 @@ export default class weatherFrame extends Component {
         )
     }
 }
-
-
-// const WeatherFrame = () => {
-//     let test = APITEST();
-//     console.log ('test: ', test );
-
-
-//     return (
-//         <>
-//         <h1>Location Zip Code</h1>
-//             <Form>
-//                 <FormGroup>
-//                     <input type="test" name="zipcode" id="zipcode" placeholder="20500" />
-//                 </FormGroup>
-//                 <Button>Submit</Button>
-//             </Form>
-//         </>
-//     )
-// }
-
-// export default WeatherFrame; 
