@@ -1,4 +1,5 @@
-import React from 'react';
+// import e from 'express';
+import React, { Component } from 'react';
 import { Button, Form, FormGroup } from 'reactstrap';
 
 const APITEST = async () => {
@@ -17,22 +18,83 @@ const APITEST = async () => {
     }
 
 }
-const WeatherFrame = () => {
-    let test = APITEST();
-    console.log ('test: ', test );
 
+export default class weatherFrame extends Component {
+    constructor (props) {
+    super (props);
 
-    return (
-        <>
-        <h1>Location Zip Code</h1>
-            <Form>
-                <FormGroup>
-                    <input type="test" name="zipcode" id="zipcode" placeholder="20500" />
-                </FormGroup>
-                <Button>Submit</Button>
-            </Form>
-        </>
-    )
+    this.onChangeOurSearch = this.onChangeOurSearch.bind(this);
+
+    this.state = {
+        ourSearch: ''
+    }
 }
 
-export default WeatherFrame; 
+    componentDidMount() {
+        this.setState({
+            ourSearch: ''
+        })
+    }
+
+    onChanmgeOurSearch(e) {
+        this.setState({
+            ourSearch: e.target.value
+        })
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        const thisSearch = {
+            ourSearch: this.state.ourSearch
+        }
+    }
+
+    // console.log ('thisSearch: ',thisSearch);
+
+    render() {
+        return (
+        <div>
+            <h1>Weather Search</h1>
+            <form onSubmit={this.onSubmit}>
+                <div className="form-group">
+                    <label>Location: </label>
+                    <input
+                        type="text"
+                        className = "formControl"
+                        value={this.state.ourSearch}
+                        onChange={this.onChangeOurSearch}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input
+                            type="submit"
+                            value="Find Weather"
+                            className="button"
+                            />
+                    </div>
+            </form>
+        </div>
+        )
+    }
+}
+
+
+// const WeatherFrame = () => {
+//     let test = APITEST();
+//     console.log ('test: ', test );
+
+
+//     return (
+//         <>
+//         <h1>Location Zip Code</h1>
+//             <Form>
+//                 <FormGroup>
+//                     <input type="test" name="zipcode" id="zipcode" placeholder="20500" />
+//                 </FormGroup>
+//                 <Button>Submit</Button>
+//             </Form>
+//         </>
+//     )
+// }
+
+// export default WeatherFrame; 
