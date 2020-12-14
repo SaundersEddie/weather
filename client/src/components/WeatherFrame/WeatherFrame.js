@@ -37,8 +37,8 @@ export default class weatherFrame extends Component {
         return (
         <div>
             <h1>Weather Search</h1>
-            <form onSubmit={this.onSubmit}>
-                <div className="form-group">
+            <Form onSubmit={this.onSubmit}>
+                <div className="FormGroup">
                     <label>Location:  </label>
                     <input
                         type="text"
@@ -51,10 +51,10 @@ export default class weatherFrame extends Component {
                         <input
                             type="submit"
                             value="Find Weather"
-                            className="button"
+                            className="Button"
                             />
                     </div>
-            </form>
+            </Form>
         </div>
         )
     }
