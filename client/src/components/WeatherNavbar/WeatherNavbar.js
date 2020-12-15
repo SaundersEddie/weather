@@ -1,53 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-    Collapse,
     Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    NavbarText
-  } from 'reactstrap';
+    Nav
+  } from 'react-bootstrap';
 
-  const WeatherNavbar = (props) => {
-    const [isOpen, setIsOpen] = useState(false);
-  
-    const toggle = () => setIsOpen(!isOpen);
-  
+  const WeatherNavbar = () => {
     return (
-      <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">reactstrap Weather</NavbarBrand>
-          <NavbarToggler onClick={toggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="mr-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">About</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-              </NavItem>
-              {/* <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Option 2
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown> */}
-            </Nav>
-            <NavbarText>V0.1 Alpha</NavbarText>
-          </Collapse>
+      <div className="container">
+        <Navbar sticky="top" bg="dark" variant="dark">
+          <Navbar.Brand href="/">React Bootstrap Weather</Navbar.Brand>
+          <Nav.Link href="#About">About</Nav.Link>
+          <Nav.Link href="http://www.github.com">Github</Nav.Link>
+          <Navbar.Text className="align-left">V1.0</Navbar.Text>
         </Navbar>
       </div>
     );

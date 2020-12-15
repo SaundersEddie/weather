@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Button, Form, FormGroup } from 'reactstrap';
+import { Button, Form, FormGroup } from 'react-bootstrap';
 
 const DisplayWeather = props => {
     return (
@@ -28,13 +28,12 @@ export default class weatherFrame extends Component {
         })
 
         // Call our weather API here to default populate
-        const defaultWeather = "38.89511 -77.03637"
+        // const defaultWeather = "38.89511 -77.03637"
+        const defaultWeather = "66210";
         axios.get(`/weather/${defaultWeather}`)
             .then(res => { 
-                // console.log ('Our Search: ', this.state.ourSearch)
                 this.setState({ourSearch: ''})
                 this.setState ({ourWeather: res.data})
-                console.log ("ourWeather:", this.state.ourWeather)
             })
             .catch ((error) => {
                 console.log ("Something went pearshaped")
@@ -49,7 +48,6 @@ export default class weatherFrame extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        // console.log ("Submit clicked");
         axios.get(`/weather/${this.state.ourSearch}`)
         .then(res => { 
             console.log ('Our Search: ', this.state.ourSearch)
@@ -64,7 +62,7 @@ export default class weatherFrame extends Component {
 
     render() {
         return (
-        <div>
+        <div className="container">
             {/* Weather Search */}
             <h1>Weather Search</h1>
             <Form onSubmit={this.onSubmit}>
@@ -77,6 +75,7 @@ export default class weatherFrame extends Component {
                         onChange={this.onChangeOurSearch}
                         />
                     </div>
+                    <br/>
                     <div className="form-group">
                         <input
                             type="submit"
@@ -85,8 +84,13 @@ export default class weatherFrame extends Component {
                             />
                     </div>
             </Form>
+            <hr/>
             {/* Our Weather display */}
-           {this.DisplayWeather}
+            <div className="container">
+                <br/>
+                <h1>Our Weather Results</h1>
+                {/* {this.DisplayWeather} */}
+            </div>
         </div>
         )
     }

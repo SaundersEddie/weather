@@ -30,8 +30,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.get('/weather/:myQuery', async (request, response) => {
-        // console.log ("Weather API: ",WEATHER_API);
-        // console.log (request);
         const myQuery = request.params.myQuery.split(',');
         console.log ("myQuery is: ",myQuery);        
         const myLoc = myQuery[0];
@@ -42,7 +40,6 @@ app.get('/weather/:myQuery', async (request, response) => {
         const json = await fetch_response.json();
         response.json(json);
 });
-
 
 mongoose.connect(ATLAS_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
         .then(() => app.listen(PORT, () => console.log(`API Server listening on ${PORT}`)))
