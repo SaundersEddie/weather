@@ -91,6 +91,7 @@ export default class weatherFrame extends Component {
                 <h1>Our Weather Results</h1>
                 {/* {this.DisplayWeather} */}
             </div>
+            <hr/>
         </div>
         )
     }
