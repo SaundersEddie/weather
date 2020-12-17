@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Button, Form, FormGroup } from 'react-bootstrap';
 
+const thisWeather = props => {
+    <h1>{props.ourWeather.location.country}</h1>
+}
 export default class weatherFrame extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +15,8 @@ export default class weatherFrame extends Component {
         this.state = {
             ourSearch: '',
             ourWeather: '',
+            ourCity: '',
+            ourRegion: '',
         };
     }
 
@@ -19,6 +24,8 @@ export default class weatherFrame extends Component {
         this.setState({
             ourSearch: '',
             ourWeather: 'settingstate',
+            ourCity: '',
+            ourRegion: '',
         })
 
         // Call our weather API here to default populate
@@ -28,6 +35,8 @@ export default class weatherFrame extends Component {
             .then(res => {
                 this.setState({ ourSearch: '' })
                 this.setState({ ourWeather: res.data })
+                this.setState({ ourCity: res.data.location.name })
+                this.setState({ ourRegion: res.data.location.region })
             })
             .catch((error) => {
                 console.log("Something went pearshaped")
@@ -55,6 +64,10 @@ export default class weatherFrame extends Component {
                 console.log("Something went pearshaped")
             });
     }
+
+    // weatherResult() {
+    //     return (myWeather = thisWeather)
+    // }
 
     render() {
         return (
@@ -87,6 +100,10 @@ export default class weatherFrame extends Component {
                     <h1>Our Weather Results</h1>
                     {console.log("our Weather: ", this.state.ourWeather)}
                     {console.log("our Weather location: ", this.state.ourWeather.location)}
+                    {console.log("Oor Country: ", this.state.ourCountry)}
+                    <h2>Todasy weather in {this.state.ourCity}</h2>
+                    <br />
+                    <h2>{this.state.ourRegion}</h2>
                 </div>
                 <hr />
             </div>
