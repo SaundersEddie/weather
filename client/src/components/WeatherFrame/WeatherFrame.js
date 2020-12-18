@@ -1,10 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Button, Form, FormGroup } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import testGet from '../../utils/API';
 
-const thisWeather = props => {
-    <h1>{props.ourWeather.location.country}</h1>
-}
 export default class weatherFrame extends Component {
     constructor(props) {
         super(props);
@@ -26,21 +24,25 @@ export default class weatherFrame extends Component {
             ourWeather: 'settingstate',
             ourCity: '',
             ourRegion: '',
-        })
+        });
+
+        console.log (testGet);
+        // let testCall = getWeather(27603);
+        // console.log ("Testcall is: ",testCall);
 
         // Call our weather API here to default populate
         // const defaultWeather = "38.89511 -77.03637"
-        const defaultWeather = "66210";
-        axios.get(`/weather/${defaultWeather}`)
-            .then(res => {
-                this.setState({ ourSearch: '' })
-                this.setState({ ourWeather: res.data })
-                this.setState({ ourCity: res.data.location.name })
-                this.setState({ ourRegion: res.data.location.region })
-            })
-            .catch((error) => {
-                console.log("Something went pearshaped")
-            });
+        // const defaultWeather = "66210";
+        // axios.get(`/weather/${defaultWeather}`)
+        //     .then(res => {
+        //         this.setState({ ourSearch: '' })
+        //         this.setState({ ourWeather: res.data })
+        //         this.setState({ ourCity: res.data.location.name })
+        //         this.setState({ ourRegion: res.data.location.region })
+        //     })
+        //     .catch((error) => {
+        //         console.log("Something went pearshaped")
+        //     });
     }
 
 
@@ -64,10 +66,6 @@ export default class weatherFrame extends Component {
                 console.log("Something went pearshaped")
             });
     }
-
-    // weatherResult() {
-    //     return (myWeather = thisWeather)
-    // }
 
     render() {
         return (
@@ -98,9 +96,9 @@ export default class weatherFrame extends Component {
                 <div className="container">
                     <br />
                     <h1>Our Weather Results</h1>
-                    {console.log("our Weather: ", this.state.ourWeather)}
-                    {console.log("our Weather location: ", this.state.ourWeather.location)}
-                    {console.log("Oor Country: ", this.state.ourCountry)}
+                    {/* {console.log("our Weather: ", this.state.ourWeather)} */}
+                    {/* {console.log("our Weather location: ", this.state.ourWeather.location)} */}
+                    {/* {console.log("Oor Country: ", this.state.ourCountry)} */}
                     <h2>Todasy weather in {this.state.ourCity}</h2>
                     <br />
                     <h2>{this.state.ourRegion}</h2>
