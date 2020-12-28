@@ -22,7 +22,7 @@ The goal for this pafge was to create a simple weather app, allowing the user to
 
 The following technologies were used in this project
 
-- node JS
+- node JS version 14.5.0
 - React
 - Axios
 
