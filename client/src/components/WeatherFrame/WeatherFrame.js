@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
-import testGet from '../../utils/API';
 
 export default class weatherFrame extends Component {
     constructor(props) {
@@ -26,26 +25,21 @@ export default class weatherFrame extends Component {
             ourRegion: '',
         });
 
-        console.log (testGet);
-        // let testCall = getWeather(27603);
-        // console.log ("Testcall is: ",testCall);
 
         // Call our weather API here to default populate
-        // const defaultWeather = "38.89511 -77.03637"
+        const defaultWeather = "38.89511 -77.03637";
         // const defaultWeather = "66210";
-        // axios.get(`/weather/${defaultWeather}`)
-        //     .then(res => {
-        //         this.setState({ ourSearch: '' })
-        //         this.setState({ ourWeather: res.data })
-        //         this.setState({ ourCity: res.data.location.name })
-        //         this.setState({ ourRegion: res.data.location.region })
-        //     })
-        //     .catch((error) => {
-        //         console.log("Something went pearshaped")
-        //     });
+        axios.get(`/weather/${defaultWeather}`)
+            .then(res => {
+                this.setState({ ourSearch: '' })
+                this.setState({ ourWeather: res.data })
+                this.setState({ ourCity: res.data.location.name })
+                this.setState({ ourRegion: res.data.location.region })
+            })
+            .catch((error) => {
+                console.log("Something went pearshaped")
+            });
     }
-
-
 
     onChangeOurSearch(e) {
         this.setState({
@@ -55,12 +49,13 @@ export default class weatherFrame extends Component {
 
     onSubmit(e) {
         e.preventDefault();
+        console.log ("Submit Clicked");
         axios.get(`/weather/${this.state.ourSearch}`)
             .then(res => {
-                // console.log('Our Search: ', this.state.ourSearch)
                 this.setState({ ourSearch: '' })
                 this.setState({ ourWeather: res.data })
-                // console.log("ourWeather onSubmit:", this.state.ourWeather)
+                console.log ("Our Submit Rest: ", res.data)
+                console.log("ourWeather onSubmit:", res.data.location.name)
             })
             .catch((error) => {
                 console.log("Something went pearshaped")
@@ -99,7 +94,7 @@ export default class weatherFrame extends Component {
                     {/* {console.log("our Weather: ", this.state.ourWeather)} */}
                     {/* {console.log("our Weather location: ", this.state.ourWeather.location)} */}
                     {/* {console.log("Oor Country: ", this.state.ourCountry)} */}
-                    <h2>Todasy weather in {this.state.ourCity}</h2>
+                    <h2>Todays weather in {this.state.ourCity}</h2>
                     <br />
                     <h2>{this.state.ourRegion}</h2>
                 </div>
