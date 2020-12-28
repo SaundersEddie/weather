@@ -11,35 +11,36 @@ export default class weatherFrame extends Component {
 
         this.state = {
             ourSearch: '',
-            ourWeather: '',
             ourCity: '',
             ourRegion: '',
+            ourLocalTime: '',
         };
     }
 
     componentDidMount() {
         this.setState({
             ourSearch: '',
-            ourWeather: 'settingstate',
             ourCity: '',
             ourRegion: '',
+            ourLocalTime: '',
         });
 
 
         // Call our weather API here to default populate
         const defaultWeather = "38.89511 -77.03637";
-        // const defaultWeather = "66210";
         axios.get(`/weather/${defaultWeather}`)
             .then(res => {
-                this.setState({ ourSearch: '' })
-                this.setState({ ourWeather: res.data })
-                this.setState({ ourCity: res.data.location.name })
-                this.setState({ ourRegion: res.data.location.region })
+                this.setState({ 
+                    ourSearch: '',
+                    ourCity: res.data.location.name,
+                    ourRegion: res.data.location.region,
+                    ourLocalTime: res.data.location.localtime
+                })
             })
             .catch((error) => {
                 console.log("Something went pearshaped")
             });
-    }
+        }
 
     onChangeOurSearch(e) {
         this.setState({
@@ -52,10 +53,12 @@ export default class weatherFrame extends Component {
         console.log ("Submit Clicked");
         axios.get(`/weather/${this.state.ourSearch}`)
             .then(res => {
-                this.setState({ ourSearch: '' })
-                this.setState({ ourWeather: res.data })
-                console.log ("Our Submit Rest: ", res.data)
-                console.log("ourWeather onSubmit:", res.data.location.name)
+                this.setState({ 
+                    ourSearch: '',
+                    ourCity: res.data.location.name,
+                    ourRegion: res.data.location.region,
+                    ourLocalTime: res.data.location.localtime
+                })
             })
             .catch((error) => {
                 console.log("Something went pearshaped")
@@ -91,12 +94,9 @@ export default class weatherFrame extends Component {
                 <div className="container">
                     <br />
                     <h1>Our Weather Results</h1>
-                    {/* {console.log("our Weather: ", this.state.ourWeather)} */}
-                    {/* {console.log("our Weather location: ", this.state.ourWeather.location)} */}
-                    {/* {console.log("Oor Country: ", this.state.ourCountry)} */}
-                    <h2>Todays weather in {this.state.ourCity}</h2>
+                    <h2>Todays weather in {this.state.ourCity}, {this.state.ourRegion}</h2>
+                    <h2>Local Date & Time: {this.state.ourLocalTime}</h2>
                     <br />
-                    <h2>{this.state.ourRegion}</h2>
                 </div>
                 <hr />
             </div>
