@@ -29,4 +29,4 @@ The following technologies were used in this project
 APIs
 The following API was used in this project:
 
-- Weather API
+- Weather API - https://www.weatherapi.com/
