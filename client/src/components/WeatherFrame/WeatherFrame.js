@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Form } from 'react-bootstrap';
+import { Card, Form } from 'react-bootstrap';
 
 export default class weatherFrame extends Component {
     constructor(props) {
@@ -53,6 +53,7 @@ export default class weatherFrame extends Component {
         console.log ("Submit Clicked");
         axios.get(`/weather/${this.state.ourSearch}`)
             .then(res => {
+                console.log (res.data);
                 this.setState({ 
                     ourSearch: '',
                     ourCity: res.data.location.name,
@@ -93,6 +94,11 @@ export default class weatherFrame extends Component {
                 {/* Our Weather display */}
                 <div className="container">
                     <br />
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>Todays Weather in: {this.state.ourCity}, {this.state.ourRegion} </Card.Title>
+                        </Card.Body>
+                    </Card>
                     <h1>Our Weather Results</h1>
                     <h2>Todays weather in {this.state.ourCity}, {this.state.ourRegion}</h2>
                     <h2>Local Date & Time: {this.state.ourLocalTime}</h2>
