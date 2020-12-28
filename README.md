@@ -30,3 +30,8 @@ APIs
 The following API was used in this project:
 
 - Weather API - https://www.weatherapi.com/
+
+## Usage
+
+The page can be visited here:
+https://exs-weather-react.herokuapp.com/
