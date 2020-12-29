@@ -68,6 +68,7 @@ export default class weatherFrame extends Component {
 
     render() {
         return (
+            <>
             <div className="container">
                 {/* Weather Search */}
                 <h1>Weather Search</h1>
@@ -104,8 +105,10 @@ export default class weatherFrame extends Component {
                     <h2>Local Date & Time: {this.state.ourLocalTime}</h2>
                     <br />
                 </div>
+                </div>
                 <hr />
-            </div>
+            </>
+
         )
     }
 }
