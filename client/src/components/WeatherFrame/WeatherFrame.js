@@ -17,6 +17,8 @@ export default class weatherFrame extends Component {
             ourAlert: '',
             ourAlertArea: '',
             ourAlertDesc: '',
+            ourCurrentConditions: '',
+            ourCurrentConditionsIcon: '',
         };
     }
 
@@ -29,6 +31,8 @@ export default class weatherFrame extends Component {
             ourAlert: '',
             ourAlertArea: '',
             ourAlertDesc: '',
+            ourCurrentConditions: '',
+            ourCurrentConditionsIcon: '',
         });
 
 
@@ -44,6 +48,8 @@ export default class weatherFrame extends Component {
                     ourAlert: res.data.alert.headline,
                     ourAlertArea: res.data.alert.areas,
                     ourAlertDesc: res.data.alert.desc,
+                    ourCurrentConditions: res.data.current.condition.text,
+                    ourCurrentConditionsIcon: res.data.current.condition.icon,
                 })
             })
             .catch((error) => {
@@ -62,7 +68,7 @@ export default class weatherFrame extends Component {
         console.log ("Submit Clicked");
         axios.get(`/weather/${this.state.ourSearch}`)
             .then(res => {
-                console.log (res.data.alert);
+                console.log (res.data.current.condition.text);
                 this.setState({ 
                     ourSearch: '',
                     ourCity: res.data.location.name,
@@ -71,6 +77,8 @@ export default class weatherFrame extends Component {
                     ourAlert: res.data.alert.headline,
                     ourAlertArea: res.data.alert.areas,
                     ourAlertDesc: res.data.alert.desc,
+                    ourCurrentConditions: res.data.current.condition.text,
+                    ourCurrentConditionsIcon: res.data.current.condition.icon,
                 })
             })
             .catch((error) => {
@@ -118,6 +126,8 @@ export default class weatherFrame extends Component {
                             {this.state.ourAlertDesc}<br/>
                             {this.state.ourAlertArea} <br/> </p>
                             <h2>Current Conditions</h2>
+                            <p>{this.state.ourCurrentConditions}</p>
+                            <img src={this.state.ourCurrentConditionsIcon} alt={this.state.ourCurrentConditions}/>
 
                         </Card.Body>
                     </Card>
