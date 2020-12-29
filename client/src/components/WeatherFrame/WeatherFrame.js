@@ -19,6 +19,9 @@ export default class weatherFrame extends Component {
             ourAlertDesc: '',
             ourCurrentConditions: '',
             ourCurrentConditionsIcon: '',
+            ourCurrentTemp: '',
+            ourCurrentWindSpeed: '',
+            ourCurrentWindDirection: '',
         };
     }
 
@@ -33,6 +36,9 @@ export default class weatherFrame extends Component {
             ourAlertDesc: '',
             ourCurrentConditions: '',
             ourCurrentConditionsIcon: '',
+            ourCurrentTemp: '',
+            ourCurrentWindSpeed: '',
+            ourCurrentWindDirection: '',
         });
 
 
@@ -50,6 +56,9 @@ export default class weatherFrame extends Component {
                     ourAlertDesc: res.data.alert.desc,
                     ourCurrentConditions: res.data.current.condition.text,
                     ourCurrentConditionsIcon: res.data.current.condition.icon,
+                    ourCurrentTemp: res.data.current.temp_f,
+                    ourCurrentWindSpeed: res.data.current.wind_mph,
+                    ourCurrentWindDirection: res.data.current.wind_dir,
                 })
             })
             .catch((error) => {
@@ -79,6 +88,9 @@ export default class weatherFrame extends Component {
                     ourAlertDesc: res.data.alert.desc,
                     ourCurrentConditions: res.data.current.condition.text,
                     ourCurrentConditionsIcon: res.data.current.condition.icon,
+                    ourCurrentTemp: res.data.current.temp_f,
+                    ourCurrentWindSpeed: res.data.current.wind_mph,
+                    ourCurrentWindDirection: res.data.current.wind_dir,
                 })
             })
             .catch((error) => {
@@ -128,7 +140,7 @@ export default class weatherFrame extends Component {
                             <h2>Current Conditions</h2>
                             <p>{this.state.ourCurrentConditions}</p>
                             <img src={this.state.ourCurrentConditionsIcon} alt={this.state.ourCurrentConditions}/>
-
+                            <p>Current Temperature: {this.state.ourCurrentTemp}f Current Wind Speed: {this.state.ourCurrentWindSpeed}mph Direction: {this.state.ourCurrentWindDirection}</p>
                         </Card.Body>
                     </Card>
                     <h1>Our Weather Results</h1>

@@ -3,7 +3,7 @@ import axios from 'axios';
 // Call our server side APIS
 
 export default {
-    getWeather: function (p1) {
+    getWeather: function(p1) {
         console.log ("Passed Parameter: ", p1)
         axios.get(`/weather/${p1}`)
             .then (res => {
