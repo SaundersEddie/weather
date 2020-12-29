@@ -14,6 +14,9 @@ export default class weatherFrame extends Component {
             ourCity: '',
             ourRegion: '',
             ourLocalTime: '',
+            ourAlert: '',
+            ourAlertArea: '',
+            ourAlertDesc: '',
         };
     }
 
@@ -23,6 +26,9 @@ export default class weatherFrame extends Component {
             ourCity: '',
             ourRegion: '',
             ourLocalTime: '',
+            ourAlert: '',
+            ourAlertArea: '',
+            ourAlertDesc: '',
         });
 
 
@@ -34,11 +40,14 @@ export default class weatherFrame extends Component {
                     ourSearch: '',
                     ourCity: res.data.location.name,
                     ourRegion: res.data.location.region,
-                    ourLocalTime: res.data.location.localtime
+                    ourLocalTime: res.data.location.localtime,
+                    ourAlert: res.data.alert.headline,
+                    ourAlertArea: res.data.alert.areas,
+                    ourAlertDesc: res.data.alert.desc,
                 })
             })
             .catch((error) => {
-                console.log("Something went pearshaped")
+                console.log("Error in default pull")
             });
         }
 
@@ -53,16 +62,19 @@ export default class weatherFrame extends Component {
         console.log ("Submit Clicked");
         axios.get(`/weather/${this.state.ourSearch}`)
             .then(res => {
-                console.log (res.data);
+                console.log (res.data.alert);
                 this.setState({ 
                     ourSearch: '',
                     ourCity: res.data.location.name,
                     ourRegion: res.data.location.region,
-                    ourLocalTime: res.data.location.localtime
+                    ourLocalTime: res.data.location.localtime,
+                    ourAlert: res.data.alert.headline,
+                    ourAlertArea: res.data.alert.areas,
+                    ourAlertDesc: res.data.alert.desc,
                 })
             })
             .catch((error) => {
-                console.log("Something went pearshaped")
+                console.log("Error in search pull")
             });
     }
 
@@ -97,7 +109,16 @@ export default class weatherFrame extends Component {
                     <br />
                     <Card>
                         <Card.Body>
-                            <Card.Title>Todays Weather in: {this.state.ourCity}, {this.state.ourRegion} </Card.Title>
+                            <Card.Title>
+                                Todays Weather in: {this.state.ourCity}, {this.state.ourRegion} <br/>
+                                This forecast was pulled at: {this.state.ourLocalTime} <br/>
+                            </Card.Title>
+                            <h2>Current Weather Alerts:</h2>
+                            <p>{this.state.ourAlert}<br/>
+                            {this.state.ourAlertDesc}<br/>
+                            {this.state.ourAlertArea} <br/> </p>
+                            <h2>Current Conditions</h2>
+
                         </Card.Body>
                     </Card>
                     <h1>Our Weather Results</h1>
