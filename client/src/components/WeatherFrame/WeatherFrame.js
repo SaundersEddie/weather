@@ -22,6 +22,7 @@ export default class weatherFrame extends Component {
             ourCurrentTemp: '',
             ourCurrentWindSpeed: '',
             ourCurrentWindDirection: '',
+            ourCurrentFeelsLike: '',
         };
     }
 
@@ -39,6 +40,7 @@ export default class weatherFrame extends Component {
             ourCurrentTemp: '',
             ourCurrentWindSpeed: '',
             ourCurrentWindDirection: '',
+            ourCurrentFeelsLike: '',
         });
 
 
@@ -59,6 +61,7 @@ export default class weatherFrame extends Component {
                     ourCurrentTemp: res.data.current.temp_f,
                     ourCurrentWindSpeed: res.data.current.wind_mph,
                     ourCurrentWindDirection: res.data.current.wind_dir,
+                    ourCurrentFeelsLike: res.data.current.feelslike_f,
                 })
             })
             .catch((error) => {
@@ -91,6 +94,7 @@ export default class weatherFrame extends Component {
                     ourCurrentTemp: res.data.current.temp_f,
                     ourCurrentWindSpeed: res.data.current.wind_mph,
                     ourCurrentWindDirection: res.data.current.wind_dir,
+                    ourCurrentFeelsLike: res.data.current.feelslike_f,
                 })
             })
             .catch((error) => {
@@ -137,15 +141,14 @@ export default class weatherFrame extends Component {
                             <p>{this.state.ourAlert}<br/>
                             {this.state.ourAlertDesc}<br/>
                             {this.state.ourAlertArea} <br/> </p>
-                            <h2>Current Conditions</h2>
-                            <p>{this.state.ourCurrentConditions}</p>
-                            <img src={this.state.ourCurrentConditionsIcon} alt={this.state.ourCurrentConditions}/>
-                            <p>Current Temperature: {this.state.ourCurrentTemp}f Current Wind Speed: {this.state.ourCurrentWindSpeed}mph Direction: {this.state.ourCurrentWindDirection}</p>
+                            <h2>Current Weather</h2>
+                            <p>Current Conditions: {this.state.ourCurrentConditions}
+                            <img src={this.state.ourCurrentConditionsIcon} alt={this.state.ourCurrentConditions}/></p>
+                            <p>Current Temperature: {this.state.ourCurrentTemp}f Current Wind Speed: {this.state.ourCurrentWindSpeed}mph</p> 
+                            <p>Direction: {this.state.ourCurrentWindDirection} Feels Like: {this.state.ourCurrentFeelsLike}f</p>
                         </Card.Body>
                     </Card>
-                    <h1>Our Weather Results</h1>
-                    <h2>Todays weather in {this.state.ourCity}, {this.state.ourRegion}</h2>
-                    <h2>Local Date & Time: {this.state.ourLocalTime}</h2>
+                
                     <br />
                 </div>
                 </div>
