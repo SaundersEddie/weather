@@ -41,6 +41,7 @@ export default class weatherFrame extends Component {
             day3Wind: '',
             day3Condition: '',
             day3ConditionImage: '',
+            thisTestResults: [],
         };
     }
 
@@ -77,6 +78,7 @@ export default class weatherFrame extends Component {
             day3Wind: '',
             day3Condition: '',
             day3ConditionImage: '',
+            thisTestResults: [],
         });
 
 
@@ -89,9 +91,9 @@ export default class weatherFrame extends Component {
                     ourCity: res.data.location.name,
                     ourRegion: res.data.location.region,
                     ourLocalTime: res.data.location.localtime,
-                    ourAlert: res.data.alert.headline,
-                    ourAlertArea: res.data.alert.areas,
-                    ourAlertDesc: res.data.alert.desc,
+                    // ourAlert: res.data.alert.headline,
+                    // ourAlertArea: res.data.alert.areas,
+                    // ourAlertDesc: res.data.alert.desc,
                     ourCurrentConditions: res.data.current.condition.text,
                     ourCurrentConditionsIcon: res.data.current.condition.icon,
                     ourCurrentTemp: res.data.current.temp_f,
@@ -119,7 +121,7 @@ export default class weatherFrame extends Component {
                 })
             })
             .catch((error) => {
-                console.log("Error in default pull")
+                console.log("Error in default pull: ", error.message)
             });
         }
 
@@ -135,14 +137,20 @@ export default class weatherFrame extends Component {
         axios.get(`/weather/${this.state.ourSearch}`)
             .then(res => {
                 console.log (res.data.forecast.forecastday[0].date);
+                // console.log (res.data["alerts"]);
+                let ourAlerts = Object.keys(res.data.alerts.alert).length;
+                console.log ("our Alerts: ", ourAlerts);
+                ourAlerts !== 0 ? console.log ("We have alerts") : console.log ("No alerts");
+                // res.data.alert.headline ? console.log ('We have alert data') : console.log ("No Alerts");
+    
                 this.setState({ 
                     ourSearch: '',
                     ourCity: res.data.location.name,
                     ourRegion: res.data.location.region,
                     ourLocalTime: res.data.location.localtime,
-                    ourAlert: res.data.alert.headline,
-                    ourAlertArea: res.data.alert.areas,
-                    ourAlertDesc: res.data.alert.desc,
+                    // ourAlert: res.data.alert.headline,
+                    // ourAlertArea: res.data.alert.areas,
+                    // ourAlertDesc: res.data.alert.desc,
                     ourCurrentConditions: res.data.current.condition.text,
                     ourCurrentConditionsIcon: res.data.current.condition.icon,
                     ourCurrentTemp: res.data.current.temp_f,
@@ -170,7 +178,7 @@ export default class weatherFrame extends Component {
                 })
             })
             .catch((error) => {
-                console.log("Error in search pull")
+                console.log("Error in search pull: ", error.message)
             });
     }
 
