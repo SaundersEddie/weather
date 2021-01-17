@@ -41,7 +41,6 @@ export default class weatherFrame extends Component {
             day3Wind: '',
             day3Condition: '',
             day3ConditionImage: '',
-            thisTestResults: [],
         };
     }
 
@@ -78,9 +77,7 @@ export default class weatherFrame extends Component {
             day3Wind: '',
             day3Condition: '',
             day3ConditionImage: '',
-            thisTestResults: [],
         });
-
 
         // Call our weather API here to default populate
         const defaultWeather = "38.89511 -77.03637";
@@ -91,9 +88,6 @@ export default class weatherFrame extends Component {
                     ourCity: res.data.location.name,
                     ourRegion: res.data.location.region,
                     ourLocalTime: res.data.location.localtime,
-                    // ourAlert: res.data.alert.headline,
-                    // ourAlertArea: res.data.alert.areas,
-                    // ourAlertDesc: res.data.alert.desc,
                     ourCurrentConditions: res.data.current.condition.text,
                     ourCurrentConditionsIcon: res.data.current.condition.icon,
                     ourCurrentTemp: res.data.current.temp_f,
@@ -136,21 +130,15 @@ export default class weatherFrame extends Component {
         console.log ("Submit Clicked");
         axios.get(`/weather/${this.state.ourSearch}`)
             .then(res => {
-                console.log (res.data.forecast.forecastday[0].date);
-                // console.log (res.data["alerts"]);
+                // Here we will update our alerts state
                 let ourAlerts = Object.keys(res.data.alerts.alert).length;
-                console.log ("our Alerts: ", ourAlerts);
                 ourAlerts !== 0 ? console.log ("We have alerts") : console.log ("No alerts");
-                // res.data.alert.headline ? console.log ('We have alert data') : console.log ("No Alerts");
-    
+
                 this.setState({ 
                     ourSearch: '',
                     ourCity: res.data.location.name,
                     ourRegion: res.data.location.region,
                     ourLocalTime: res.data.location.localtime,
-                    // ourAlert: res.data.alert.headline,
-                    // ourAlertArea: res.data.alert.areas,
-                    // ourAlertDesc: res.data.alert.desc,
                     ourCurrentConditions: res.data.current.condition.text,
                     ourCurrentConditionsIcon: res.data.current.condition.icon,
                     ourCurrentTemp: res.data.current.temp_f,
@@ -229,8 +217,6 @@ export default class weatherFrame extends Component {
                         </Card.Body>
                     </Card>
                     <hr />
-
-
                     <CardColumns>
                         <Card>
                             <Card.Body>
@@ -260,9 +246,6 @@ export default class weatherFrame extends Component {
                             </Card.Body>
                         </Card>
                     </CardColumns>
-                
-                
-                
                     <br />
                 </div>
                 </div>
