@@ -41,6 +41,7 @@ export default class weatherFrame extends Component {
             day3Wind: '',
             day3Condition: '',
             day3ConditionImage: '',
+            ourAlerts: [],
         };
     }
 
@@ -77,12 +78,28 @@ export default class weatherFrame extends Component {
             day3Wind: '',
             day3Condition: '',
             day3ConditionImage: '',
+            ourAlerts: [],
         });
 
         // Call our weather API here to default populate
         const defaultWeather = "38.89511 -77.03637";
         axios.get(`/weather/${defaultWeather}`)
             .then(res => {
+                // Find out if we have any weather alerts
+                let ourAlerts = Object.keys(res.data.alerts.alert).length;
+                if (ourAlerts !== 0) {
+                    console.log ("We have alerts");
+                    this.setState ({
+                        ourAlerts: res.data.alerts,
+                        ourAlert: res.data.alerts.alert[0].headline,
+                        ourAlertArea: res.data.alerts.alert[0].areas,
+                        ourAlertDesc: res.data.alerts.alert[0].desc,
+                    })
+                        console.log (this.state.ourAlerts);
+                } else {
+                    console.log ("No Alerts")
+                };
+
                 this.setState({ 
                     ourSearch: '',
                     ourCity: res.data.location.name,
