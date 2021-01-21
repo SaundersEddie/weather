@@ -52,9 +52,11 @@ WeatherAPI was used to retrieve weather data, using the free tier availablke on 
 
 Theres a few things that can and will be cleaned up as I have time:
 
+- Investigate further destructuring of data, the returned API data is heavily nested so I'm not convinced if destructuring wouldn'y actually take more code lines than simply setting state on the various data aspects I need.
 - Clean up formatting
 - Allow local or backend storage of last 5 locations searched
 - Display alerts with a box or orange for watch and red for warning.
+- Look at API data and try to figure out why the API is returning a warning going back to August 2020 for a flood warning in DC, this may just require code to perform an expired warning check.
 
 ## Contribution
 
