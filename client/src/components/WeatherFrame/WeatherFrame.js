@@ -2,6 +2,10 @@ import axios from 'axios';
 import React, { Component }  from 'react';
 import { Card, CardColumns, Form } from 'react-bootstrap';
 
+const Alerts = props => {
+    console.log ("Props call")
+}
+
 export default class weatherFrame extends Component {
     constructor(props) {
         super(props);
@@ -59,30 +63,44 @@ export default class weatherFrame extends Component {
                 });
                 // Find out if we have any weather alerts
                 let ourAlerts = Object.keys(res.data.alerts.alert).length;
+                console.log ('ourAlerts: ', ourAlerts)
                 // let ourAlerts = Object.keys(this.status.currentAlerts.alerts).length
                 if (ourAlerts !== 0) {
+                    console.log ("We have an alert: ", res.data.alerts)
                     this.setState ({
-                        currentAlerts: res.data.alerts
+                        currentAlerts: {
+                            headline: res.data.alerts.alert[0].headline,
+                            note: res.data.alerts.alert[0].note
+                        }
+
                     })
-                    console.log ('ourAlerts: ', this.state.currentAlerts)
+                    // console.log ('ourAlerts: ', this.state.currentAlerts)
                 } else {
                     this.setState({
                         currentAlerts: {
                             headline: 'No Alerts To display'
                         }
                     })
-                    console.log ('ourAlerts: ', this.state.currentAlerts)
+                    // console.log ('ourAlerts: ', this.state.currentAlerts)
                 }
             })
             .catch((error) => {
                 console.log("Error in search pull: ", error.message)
             });
     }
+            alertList() {
+                console.log ("In alert list")
+                return this.state.currentAlerts.map(alertsList => {
+                    return <Alerts alerts={alertsList} />;
+                })
+            }
+    
 
     render() {
-        console.log ("our alerts", this.state.currentAlerts)
+        // console.log ("our alerts", this.state.currentAlerts)
         return (
             <div className="container">
+                {this.alertList}
                 <h1>Weather Search</h1>
                 <Form onSubmit={this.onSubmit}>
                     <div className="FormGroup">
@@ -115,8 +133,8 @@ export default class weatherFrame extends Component {
                             </Card.Title>
                             <h2>Current Weather Alerts:</h2>
                             <h4>{this.state.currentAlerts.headline}<br/></h4>
-                            {/* <p>{this.state.ourAlertDesc}<br/></p>
-                            <h4><p>Affected Areas: {this.state.ourAlertArea}</p></h4><br/> */}
+                            {/* <p>{this.state.currentAlerts.alert[0]}<br/></p> */}
+                            <h4><p>Affected Areas: {this.state.currentAlerts.note}</p></h4><br/>
                             <h2>Current Weather</h2>
                             <p>Current Conditions: {this.state.currentConditions.text}
                             <img src={this.state.currentConditions.icon} alt={this.state.currentConditions.text}/></p>
