@@ -11,7 +11,7 @@ export default class weatherFrame extends Component {
             currentWeather: '',
             currentLocation: '',
             currentConditions: {},
-            currentAlerts: [],
+            currentAlerts: '',
             currentForecast: {
                 day1: {},
                 day2: {},
@@ -26,7 +26,7 @@ export default class weatherFrame extends Component {
             currentWeather: '',
             currentLocation: '',
             currentConditions: {},
-            currentAlerts: [],
+            currentAlerts: '',
             currentForecast: {
                 day1: {},
                 day2: {},
@@ -34,10 +34,17 @@ export default class weatherFrame extends Component {
             },
             ourSearch: '',
         });
+    }
 
-        // Call our weather API here to default populate
-        const defaultWeather = "38.89511 -77.03637";
-        axios.get(`/weather/${defaultWeather}`)
+    onChangeOurSearch(e) {
+        this.setState({
+            ourSearch: e.target.value
+            })
+        };
+    
+    onSubmit(e) {
+        e.preventDefault();
+        axios.get(`/weather/${this.state.ourSearch}`)
             .then(res => {
                 this.setState({
                     currentWeather: res.data.current,
@@ -51,67 +58,21 @@ export default class weatherFrame extends Component {
                     currentLocation: res.data.location,
                 });
                 // Find out if we have any weather alerts
-                // let ourAlerts = Object.keys(res.data.alerts.alert).length;
-                // if (ourAlerts !== 0) {
-                //     // console.log ("We have alerts");
-                //     this.setState ({
-                //         ourAlerts: res.data.alerts,
-                //         ourAlert: myAlerts.alert[0].headline,
-                //         ourAlertArea: myAlerts.alert[0].areas,
-                //         ourAlertDesc: myAlerts.alert[0].desc,
-                //     })
-                //         // console.log (this.state.ourAlerts.alert[0].headline);
-                // } else {
-                //     // console.log ("No Alerts")
-                // };
-            })
-            .catch((error) => {
-                console.log("Error in default pull: ", error.message)
-            });
-        }
-
-    onChangeOurSearch(e) {
-        this.setState({
-            ourSearch: e.target.value
-            })
-        };
-    
-    onSubmit(e) {
-        e.preventDefault();
-        this.setState ({
-            ourAlerts: '',
-            ourAlert: '',
-            ourAlertArea: '',
-            ourAlertDesc: ''
-        });
-
-         axios.get(`/weather/${this.state.ourSearch}`)
-            .then(res => {
-                
-                this.setState({
-                    currentWeather: res.data.current,
-                    currentAlerts: res.data.alerts,
-                    currentConditions: res.data.current.condition,
-                    currentForecast: {
-                        day1: res.data.forecast.forecastday[0],
-                        day2: res.data.forecast.forecastday[1],
-                        day3: res.data.forecast.forecastday[2],
-                    },
-                    currentLocation: res.data.location,
-                });
-                const { ...myAlerts} = res.data.alerts;
-
                 let ourAlerts = Object.keys(res.data.alerts.alert).length;
+                // let ourAlerts = Object.keys(this.status.currentAlerts.alerts).length
                 if (ourAlerts !== 0) {
                     this.setState ({
-                        ourAlerts: res.data.alerts,
-                        ourAlert: myAlerts.alert[0].headline,
-                        ourAlertArea: myAlerts.alert[0].areas,
-                        ourAlertDesc: myAlerts.alert[0].desc,
+                        currentAlerts: res.data.alerts
                     })
+                    console.log ('ourAlerts: ', this.state.currentAlerts)
                 } else {
-                    console.log ("No Alerts")
-                };
+                    this.setState({
+                        currentAlerts: {
+                            headline: 'No Alerts To display'
+                        }
+                    })
+                    console.log ('ourAlerts: ', this.state.currentAlerts)
+                }
             })
             .catch((error) => {
                 console.log("Error in search pull: ", error.message)
@@ -119,6 +80,7 @@ export default class weatherFrame extends Component {
     }
 
     render() {
+        console.log ("our alerts", this.state.currentAlerts)
         return (
             <div className="container">
                 <h1>Weather Search</h1>
@@ -152,8 +114,8 @@ export default class weatherFrame extends Component {
                                 This forecast was pulled at: {this.state.currentLocation.localtime} <br/>
                             </Card.Title>
                             <h2>Current Weather Alerts:</h2>
-                            {/* <h4>{this.state.ourAlertHeadline}<br/></h4>
-                            <p>{this.state.ourAlertDesc}<br/></p>
+                            <h4>{this.state.currentAlerts.headline}<br/></h4>
+                            {/* <p>{this.state.ourAlertDesc}<br/></p>
                             <h4><p>Affected Areas: {this.state.ourAlertArea}</p></h4><br/> */}
                             <h2>Current Weather</h2>
                             <p>Current Conditions: {this.state.currentConditions.text}
