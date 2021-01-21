@@ -18,7 +18,6 @@ export default class weatherFrame extends Component {
                 day3: {},
             },
             ourSearch: '',
-            testData: {},
         };
     }
 
@@ -34,20 +33,12 @@ export default class weatherFrame extends Component {
                 day3: {},
             },
             ourSearch: '',
-            testData: {},
         });
 
         // Call our weather API here to default populate
         const defaultWeather = "38.89511 -77.03637";
         axios.get(`/weather/${defaultWeather}`)
             .then(res => {
-                // console.log (res.data);
-               this.setState ({
-                   testData: res.data,
-                });
-            //    console.log ("testData", this.state.testData)
-
-
                 this.setState({
                     currentWeather: res.data.current,
                     currentAlerts: res.data.alerts,
@@ -58,11 +49,7 @@ export default class weatherFrame extends Component {
                         day3: res.data.forecast.forecastday[2],
                     },
                     currentLocation: res.data.location,
-                })
-
-                // console.log ("currentForecast: ", this.state.currentForecast.forecastday[0].date);
-                // console.log ("currentForecast: ", this.state.currentForecast.day1.day);
-             
+                });
                 // Find out if we have any weather alerts
                 // let ourAlerts = Object.keys(res.data.alerts.alert).length;
                 // if (ourAlerts !== 0) {
@@ -91,7 +78,6 @@ export default class weatherFrame extends Component {
     
     onSubmit(e) {
         e.preventDefault();
-        console.log ("Submit Clicked");
         this.setState ({
             ourAlerts: '',
             ourAlert: '',
@@ -103,15 +89,16 @@ export default class weatherFrame extends Component {
             .then(res => {
                 
                 this.setState({
+                    currentWeather: res.data.current,
                     currentAlerts: res.data.alerts,
                     currentConditions: res.data.current.condition,
-                    currentForecast: res.data.forecast,
+                    currentForecast: {
+                        day1: res.data.forecast.forecastday[0],
+                        day2: res.data.forecast.forecastday[1],
+                        day3: res.data.forecast.forecastday[2],
+                    },
                     currentLocation: res.data.location,
-                })
-
-                // const testData = setState(res.data.forecast);
-                // console.log ("our testData: ", testData);
-
+                });
                 const { ...myAlerts} = res.data.alerts;
 
                 let ourAlerts = Object.keys(res.data.alerts.alert).length;
@@ -122,7 +109,6 @@ export default class weatherFrame extends Component {
                         ourAlertArea: myAlerts.alert[0].areas,
                         ourAlertDesc: myAlerts.alert[0].desc,
                     })
-                        // console.log (this.state.ourAlerts.alert[0].headline);
                 } else {
                     console.log ("No Alerts")
                 };
@@ -159,7 +145,6 @@ export default class weatherFrame extends Component {
          
                 <div className="container">
                     <br />
-                    {console.log ("inside render: ", this.state.testData)}
                     <Card>
                         <Card.Body>
                             <Card.Title>
@@ -183,28 +168,28 @@ export default class weatherFrame extends Component {
                         <Card>
                             <Card.Body>
                                 <Card.Title>{this.state.currentForecast.day1.date}</Card.Title>
-                                <p>Min: {this.state.currentForecast.day1.mintemp_f}f</p>
-                                <p>Max: {this.state.currentForecast.day1.maxtemp_f}f</p>
-                                <p>Wind {this.state.currentForecast.day1.maxwind_mph}mph </p>
-                                {/* <img src={this.state.currentForecast.day1.condition.icon} alt={this.state.currentForecast.day1.condition.text} /> <br/> */}
+                                <p>Min: {this.state.currentForecast.day1.day?.mintemp_f} f</p>
+                                <p>Max: {this.state.currentForecast.day1.day?.maxtemp_f} f</p>
+                                <p>Wind {this.state.currentForecast.day1.day?.maxwind_mph} mph </p>
+                                <img src={this.state.currentForecast.day1.day?.condition.icon} alt={this.state.currentForecast.day1.day?.condition.text} /> <br/>
                             </Card.Body>
                         </Card>
                         <Card>
                             <Card.Body>
                             <Card.Title>{this.state.currentForecast.day2.date}</Card.Title>
-                                <p>Min: {this.state.currentForecast.day2.mintemp_f}f</p>
-                                <p>Max: {this.state.currentForecast.day2.maxtemp_f}f</p>
-                                <p>Wind {this.state.currentForecast.day2.maxwind_mph}mph </p>
-                                {/* <img src={this.state.day2ConditionImage} alt={this.state.day2Condition} /> <br/> */}
+                                <p>Min: {this.state.currentForecast.day2.day?.mintemp_f} f</p>
+                                <p>Max: {this.state.currentForecast.day2.day?.maxtemp_f} f</p>
+                                <p>Wind {this.state.currentForecast.day2.day?.maxwind_mph} mph </p>
+                                <img src={this.state.currentForecast.day2.day?.condition.icon} alt={this.state.currentForecast.day2.day?.condition.text} /> <br/>
                             </Card.Body>
                         </Card>
                         <Card>
                             <Card.Body>
                             <Card.Title>{this.state.currentForecast.day3.date}</Card.Title>
-                                <p>Min: {this.state.currentForecast.day3.mintemp_f}f</p>
-                                <p>Max: {this.state.currentForecast.day3.maxtemp_f}f</p>
-                                <p>Wind {this.state.currentForecast.day3.maxwind_mph}mph </p>
-                                {/* <img src={this.state.day2ConditionImage} alt={this.state.day2Condition} /> <br/> */}
+                                <p>Min: {this.state.currentForecast.day3.day?.mintemp_f} f</p>
+                                <p>Max: {this.state.currentForecast.day3.day?.maxtemp_f} f</p>
+                                <p>Wind {this.state.currentForecast.day3.day?.maxwind_mph} mph </p>
+                                <img src={this.state.currentForecast.day3.day?.condition.icon} alt={this.state.currentForecast.day3.day?.condition.text} /> <br/>
                             </Card.Body>
                         </Card> 
                     </CardColumns>
