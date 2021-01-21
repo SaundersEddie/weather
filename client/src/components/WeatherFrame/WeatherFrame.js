@@ -1,161 +1,82 @@
 import axios from 'axios';
-import React, { Component } from 'react';
+import React, { Component }  from 'react';
 import { Card, CardColumns, Form } from 'react-bootstrap';
 
 export default class weatherFrame extends Component {
     constructor(props) {
         super(props);
-
         this.onChangeOurSearch = this.onChangeOurSearch.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
         this.state = {
-            ourSearch: '',
-            ourCity: '',
-            ourRegion: '',
-            ourLocalTime: '',
-            ourAlert: '',
-            ourAlertArea: '',
-            ourAlertDesc: '',
-            ourCurrentConditions: '',
-            ourCurrentConditionsIcon: '',
-            ourCurrentTemp: '',
-            ourCurrentWindSpeed: '',
-            ourCurrentWindDirection: '',
-            ourCurrentFeelsLike: '',
-            // day1Date: '',
-            day1MinTemp: '',
-            day1MaxTemp: '',
-            day1Wind: '',
-            day1Condition: '',
-            day1ConditionImage: '',
-            day2Date: '',
-            day2MinTemp: '',
-            day2MaxTemp: '',
-            day2Wind: '',
-            day2Condition: '',
-            day2ConditionImage: '',
-            day3Date: '',
-            day3MinTemp: '',
-            day3MaxTemp: '',
-            day3Wind: '',
-            day3Condition: '',
-            day3ConditionImage: '',
-            ourAlerts: [],
-            day1Weather: {
-                day1MinTemp: 0,
-                day1MaxTemp: 0,
-                day1Wind: 0,
-                day1Condition: '',
-                day1ConditionImage: '',
+            currentWeather: '',
+            currentLocation: '',
+            currentConditions: {},
+            currentAlerts: [],
+            currentForecast: {
+                day1: {},
+                day2: {},
+                day3: {},
             },
+            ourSearch: '',
+            testData: {},
         };
     }
 
     componentDidMount() {
         this.setState({
-            ourSearch: '',
-            ourCity: '',
-            ourRegion: '',
-            ourLocalTime: '',
-            ourAlert: '',
-            ourAlertArea: '',
-            ourAlertDesc: '',
-            ourCurrentConditions: '',
-            ourCurrentConditionsIcon: '',
-            ourCurrentTemp: '',
-            ourCurrentWindSpeed: '',
-            ourCurrentWindDirection: '',
-            ourCurrentFeelsLike: '',
-            // day1Date: '',
-            day1MinTemp: '',
-            day1MaxTemp: '',
-            day1Wind: '',
-            day1Condition: '',
-            day1ConditionImage: '',
-            day2Date: '',
-            day2MinTemp: '',
-            day2MaxTemp: '',
-            day2Wind: '',
-            day2Condition: '',
-            day2ConditionImage: '',
-            day3Date: '',
-            day3MinTemp: '',
-            day3MaxTemp: '',
-            day3Wind: '',
-            day3Condition: '',
-            day3ConditionImage: '',
-            ourAlerts: [],
-            day1Weather: {
-                day1MinTemp: 0,
-                day1MaxTemp: 0,
-                day1Wind: 0,
-                day1Condition: '',
-                day1ConditionImage: '',
+            currentWeather: '',
+            currentLocation: '',
+            currentConditions: {},
+            currentAlerts: [],
+            currentForecast: {
+                day1: {},
+                day2: {},
+                day3: {},
             },
+            ourSearch: '',
+            testData: {},
         });
 
         // Call our weather API here to default populate
         const defaultWeather = "38.89511 -77.03637";
         axios.get(`/weather/${defaultWeather}`)
             .then(res => {
-                const { ...myLocation } = res.data.location;
-                const { ...myAlerts} = res.data.alerts;
-                const { ...myForecast} = res.data.forecast;
-                const { ...myCurrent } = res.data.current;
+                // console.log (res.data);
+               this.setState ({
+                   testData: res.data,
+                });
+            //    console.log ("testData", this.state.testData)
 
-                // console.log ("Our Location: ", myLocation);
-                // console.log ("Our Alerts: ", myAlerts);
-                // console.log (`myForecast: `, myForecast);
-                // console.log (`myCurrent: `, myCurrent);
 
-                // Find out if we have any weather alerts
-                let ourAlerts = Object.keys(res.data.alerts.alert).length;
-                if (ourAlerts !== 0) {
-                    console.log ("We have alerts");
-                    this.setState ({
-                        ourAlerts: res.data.alerts,
-                        ourAlert: myAlerts.alert[0].headline,
-                        ourAlertArea: myAlerts.alert[0].areas,
-                        ourAlertDesc: myAlerts.alert[0].desc,
-                    })
-                        console.log (this.state.ourAlerts.alert[0].headline);
-                } else {
-                    console.log ("No Alerts")
-                };
-
-                this.setState({ 
-                    ourSearch: '',
-                    day1Weather: myForecast.forecastday[0],
-                    ourCity: myLocation.name,
-                    ourRegion: myLocation.region,
-                    ourLocalTime: myLocation.localtime,
-                    ourCurrentConditions: myCurrent.condition.text,
-                    ourCurrentConditionsIcon: myCurrent.condition.icon,
-                    ourCurrentTemp: myCurrent.temp_f,
-                    ourCurrentWindSpeed: myCurrent.wind_mph,
-                    ourCurrentWindDirection: myCurrent.wind_dir,
-                    ourCurrentFeelsLike: myCurrent.feelslike_f,
-                    day1Date: myForecast.forecastday[0].date,
-                    day1MinTemp: myForecast.forecastday[0].day.mintemp_f,
-                    day1MaxTemp: myForecast.forecastday[0].day.maxtemp_f,
-                    day1Wind: myForecast.forecastday[0].day.maxwind_mph,
-                    day1Condition: myForecast.forecastday[0].day.condition.text,
-                    day1ConditionImage: myForecast.forecastday[0].day.condition.icon,
-                    day2Date: myForecast.forecastday[1].date,
-                    day2MinTemp: myForecast.forecastday[1].day.mintemp_f,
-                    day2MaxTemp: myForecast.forecastday[1].day.maxtemp_f,
-                    day2Wind: myForecast.forecastday[1].day.maxwind_mph,
-                    day2Condition: myForecast.forecastday[1].day.condition.text,
-                    day2ConditionImage: myForecast.forecastday[1].day.condition.icon,
-                    day3Date: myForecast.forecastday[2].date,
-                    day3MinTemp: myForecast.forecastday[2].day.mintemp_f,
-                    day3MaxTemp: myForecast.forecastday[2].day.maxtemp_f,
-                    day3Wind: myForecast.forecastday[2].day.maxwind_mph,
-                    day3Condition: myForecast.forecastday[2].day.condition.text,
-                    day3ConditionImage: myForecast.forecastday[2].day.condition.icon,
+                this.setState({
+                    currentWeather: res.data.current,
+                    currentAlerts: res.data.alerts,
+                    currentConditions: res.data.current.condition,
+                    currentForecast: {
+                        day1: res.data.forecast.forecastday[0],
+                        day2: res.data.forecast.forecastday[1],
+                        day3: res.data.forecast.forecastday[2],
+                    },
+                    currentLocation: res.data.location,
                 })
-                // console.log ("Day 1 Weather: ", this.state.day1Weather.maxtemp_f)
+
+                // console.log ("currentForecast: ", this.state.currentForecast.forecastday[0].date);
+                // console.log ("currentForecast: ", this.state.currentForecast.day1.day);
+             
+                // Find out if we have any weather alerts
+                // let ourAlerts = Object.keys(res.data.alerts.alert).length;
+                // if (ourAlerts !== 0) {
+                //     // console.log ("We have alerts");
+                //     this.setState ({
+                //         ourAlerts: res.data.alerts,
+                //         ourAlert: myAlerts.alert[0].headline,
+                //         ourAlertArea: myAlerts.alert[0].areas,
+                //         ourAlertDesc: myAlerts.alert[0].desc,
+                //     })
+                //         // console.log (this.state.ourAlerts.alert[0].headline);
+                // } else {
+                //     // console.log ("No Alerts")
+                // };
             })
             .catch((error) => {
                 console.log("Error in default pull: ", error.message)
@@ -165,48 +86,46 @@ export default class weatherFrame extends Component {
     onChangeOurSearch(e) {
         this.setState({
             ourSearch: e.target.value
-        })
-    }
-
+            })
+        };
+    
     onSubmit(e) {
         e.preventDefault();
         console.log ("Submit Clicked");
-        axios.get(`/weather/${this.state.ourSearch}`)
-            .then(res => {
-                // Here we will update our alerts state
-                let ourAlerts = Object.keys(res.data.alerts.alert).length;
-                ourAlerts !== 0 ? console.log ("We have alerts") : console.log ("No alerts");
+        this.setState ({
+            ourAlerts: '',
+            ourAlert: '',
+            ourAlertArea: '',
+            ourAlertDesc: ''
+        });
 
-                this.setState({ 
-                    ourSearch: '',
-                    ourCity: res.data.location.name,
-                    ourRegion: res.data.location.region,
-                    ourLocalTime: res.data.location.localtime,
-                    ourCurrentConditions: res.data.current.condition.text,
-                    ourCurrentConditionsIcon: res.data.current.condition.icon,
-                    ourCurrentTemp: res.data.current.temp_f,
-                    ourCurrentWindSpeed: res.data.current.wind_mph,
-                    ourCurrentWindDirection: res.data.current.wind_dir,
-                    ourCurrentFeelsLike: res.data.current.feelslike_f,
-                    day1Date: res.data.forecast.forecastday[0].date,
-                    day1MinTemp: res.data.forecast.forecastday[0].day.mintemp_f,
-                    day1MaxTemp: res.data.forecast.forecastday[0].day.maxtemp_f,
-                    day1Wind: res.data.forecast.forecastday[0].day.maxwind_mph,
-                    day1Condition: res.data.forecast.forecastday[0].day.condition.text,
-                    day1ConditionImage: res.data.forecast.forecastday[0].day.condition.icon,
-                    day2Date: res.data.forecast.forecastday[1].date,
-                    day2MinTemp: res.data.forecast.forecastday[1].day.mintemp_f,
-                    day2MaxTemp: res.data.forecast.forecastday[1].day.maxtemp_f,
-                    day2Wind: res.data.forecast.forecastday[1].day.maxwind_mph,
-                    day2Condition: res.data.forecast.forecastday[1].day.condition.text,
-                    day2ConditionImage: res.data.forecast.forecastday[1].day.condition.icon,
-                    day3Date: res.data.forecast.forecastday[2].date,
-                    day3MinTemp: res.data.forecast.forecastday[2].day.mintemp_f,
-                    day3MaxTemp: res.data.forecast.forecastday[2].day.maxtemp_f,
-                    day3Wind: res.data.forecast.forecastday[2].day.maxwind_mph,
-                    day3Condition: res.data.forecast.forecastday[2].day.condition.text,
-                    day3ConditionImage: res.data.forecast.forecastday[2].day.condition.icon,
+         axios.get(`/weather/${this.state.ourSearch}`)
+            .then(res => {
+                
+                this.setState({
+                    currentAlerts: res.data.alerts,
+                    currentConditions: res.data.current.condition,
+                    currentForecast: res.data.forecast,
+                    currentLocation: res.data.location,
                 })
+
+                // const testData = setState(res.data.forecast);
+                // console.log ("our testData: ", testData);
+
+                const { ...myAlerts} = res.data.alerts;
+
+                let ourAlerts = Object.keys(res.data.alerts.alert).length;
+                if (ourAlerts !== 0) {
+                    this.setState ({
+                        ourAlerts: res.data.alerts,
+                        ourAlert: myAlerts.alert[0].headline,
+                        ourAlertArea: myAlerts.alert[0].areas,
+                        ourAlertDesc: myAlerts.alert[0].desc,
+                    })
+                        // console.log (this.state.ourAlerts.alert[0].headline);
+                } else {
+                    console.log ("No Alerts")
+                };
             })
             .catch((error) => {
                 console.log("Error in search pull: ", error.message)
@@ -214,12 +133,8 @@ export default class weatherFrame extends Component {
     }
 
     render() {
-        // console.log (this.state.day1Weather)
         return (
-           
-            <>
             <div className="container">
-                {/* Weather Search */}
                 <h1>Weather Search</h1>
                 <Form onSubmit={this.onSubmit}>
                     <div className="FormGroup">
@@ -241,62 +156,61 @@ export default class weatherFrame extends Component {
                     </div>
                 </Form>
                 <hr />
-                {/* Our Weather display */}
+         
                 <div className="container">
                     <br />
+                    {console.log ("inside render: ", this.state.testData)}
                     <Card>
                         <Card.Body>
                             <Card.Title>
-                                Todays Weather in: {this.state.ourCity}, {this.state.ourRegion} <br/>
-                                This forecast was pulled at: {this.state.ourLocalTime} <br/>
+                                Todays Weather in: {this.state.currentLocation.name}, {this.state.currentLocation.region} <br/>
+                                This forecast was pulled at: {this.state.currentLocation.localtime} <br/>
                             </Card.Title>
                             <h2>Current Weather Alerts:</h2>
-                            <h4>{this.state.ourAlertHeadline}<br/></h4>
+                            {/* <h4>{this.state.ourAlertHeadline}<br/></h4>
                             <p>{this.state.ourAlertDesc}<br/></p>
-                            <h4><p>Affected Areas: {this.state.ourAlertArea}</p></h4><br/>
+                            <h4><p>Affected Areas: {this.state.ourAlertArea}</p></h4><br/> */}
                             <h2>Current Weather</h2>
-                            <p>Current Conditions: {this.state.ourCurrentConditions}
-                            <img src={this.state.ourCurrentConditionsIcon} alt={this.state.ourCurrentConditions}/></p>
-                            <p>Current Temperature: {this.state.ourCurrentTemp}f Current Wind Speed: {this.state.ourCurrentWindSpeed}mph</p> 
-                            <p>Direction: {this.state.ourCurrentWindDirection} Feels Like: {this.state.ourCurrentFeelsLike}f</p>
+                            <p>Current Conditions: {this.state.currentConditions.text}
+                            <img src={this.state.currentConditions.icon} alt={this.state.currentConditions.text}/></p>
+                            <p>Current Temperature: {this.state.currentWeather.temp_f} f</p> 
+                            <p>Current Wind Speed: {this.state.currentWeather.wind_mph} mph</p> 
+                            <p>Direction: {this.state.currentWeather.wind_dir} Feels Like: {this.state.currentWeather.feelslike_f} f</p>
                         </Card.Body>
                     </Card>
                     <hr />
                     <CardColumns>
                         <Card>
                             <Card.Body>
-                                <Card.Title>{this.state.day1Weather.date}</Card.Title>
-                                <p>Min: {this.state.day1MinTemp}f</p>
-                                <p>Max: {this.state.day1MaxTemp}f</p>
-                                <p>Wind {this.state.day1Wind}mph </p>
-                                <img src={this.state.day1ConditionImage} alt={this.state.day1Condition} /> <br/>
+                                <Card.Title>{this.state.currentForecast.day1.date}</Card.Title>
+                                <p>Min: {this.state.currentForecast.day1.mintemp_f}f</p>
+                                <p>Max: {this.state.currentForecast.day1.maxtemp_f}f</p>
+                                <p>Wind {this.state.currentForecast.day1.maxwind_mph}mph </p>
+                                {/* <img src={this.state.currentForecast.day1.condition.icon} alt={this.state.currentForecast.day1.condition.text} /> <br/> */}
                             </Card.Body>
                         </Card>
                         <Card>
                             <Card.Body>
-                            <Card.Title>{this.state.day2Date}</Card.Title>
-                                <p>Min: {this.state.day2MinTemp}f</p>
-                                <p>Max: {this.state.day2MaxTemp}f</p>
-                                <p>Wind {this.state.day2Wind}mph </p>
-                                <img src={this.state.day2ConditionImage} alt={this.state.day2Condition} /> <br/>
+                            <Card.Title>{this.state.currentForecast.day2.date}</Card.Title>
+                                <p>Min: {this.state.currentForecast.day2.mintemp_f}f</p>
+                                <p>Max: {this.state.currentForecast.day2.maxtemp_f}f</p>
+                                <p>Wind {this.state.currentForecast.day2.maxwind_mph}mph </p>
+                                {/* <img src={this.state.day2ConditionImage} alt={this.state.day2Condition} /> <br/> */}
                             </Card.Body>
                         </Card>
                         <Card>
                             <Card.Body>
-                            <Card.Title>{this.state.day3Date}</Card.Title>
-                                <p>Min: {this.state.day3MinTemp}f</p>
-                                <p>Max: {this.state.day3MaxTemp}f</p>
-                                <p>Wind {this.state.day3Wind}mph </p>
-                                <img src={this.state.day3ConditionImage} alt={this.state.day3Condition} /> <br/>
+                            <Card.Title>{this.state.currentForecast.day3.date}</Card.Title>
+                                <p>Min: {this.state.currentForecast.day3.mintemp_f}f</p>
+                                <p>Max: {this.state.currentForecast.day3.maxtemp_f}f</p>
+                                <p>Wind {this.state.currentForecast.day3.maxwind_mph}mph </p>
+                                {/* <img src={this.state.day2ConditionImage} alt={this.state.day2Condition} /> <br/> */}
                             </Card.Body>
-                        </Card>
+                        </Card> 
                     </CardColumns>
                     <br />
                 </div>
-                </div>
-                <hr />
-            </>
-
-        )
-    }
+            </div>
+       )
+   }
 }
