@@ -8,6 +8,7 @@ This page was put together to call external API from the node backend.
 - [Usage](#Usage)
 - [Technology](#Technology)
 - [API](#API)
+- [Defects](#Defects)
 - [Future Enhancement](#Future%20Enhancement)
 - [Contribution](#Contribution)
 
@@ -48,15 +49,18 @@ WeatherAPI was used to retrieve weather data, using the free tier availablke on 
 - Weather API  
   https://www.weatherapi.com/
 
+## Defects
+
+API data for Washington DC Geolocation is returing a Coastal Flood Warning from August 5th 2020, I have disabled Alerts while digging into how to supress this. It may simply be tied to using the DC Geolocation, using the Zipcode may not have this issue.
+
 ## Future Enhancement
 
-Theres a few things that can and will be cleaned up as I have time:
+A few things that can and will be cleaned up as I have time:
 
-- Investigate further destructuring of data, the returned API data is heavily nested so I'm not convinced if destructuring wouldn'y actually take more code lines than simply setting state on the various data aspects I need.
+- Investigate further destructuring of data, the returned API data is heavily nested so I'm not convinced if destructuring wouldn't actually take more code lines than simply setting state on the various data aspects I need.
 - Clean up formatting
 - Allow local or backend storage of last 5 locations searched
 - Display alerts with a box or orange for watch and red for warning.
-- Look at API data and try to figure out why the API is returning a warning going back to August 2020 for a flood warning in DC, this may just require code to perform an expired warning check.
 
 ## Contribution
 
