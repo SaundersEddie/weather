@@ -32,7 +32,6 @@ app.get('/weather/:myQuery', async (request, response) => {
         const myLoc = myQuery[0];
         const myDays = 3;
         const WEATHER_URL = `${WEATHER_API}q=${myLoc}&days=${myDays}`;
-        console.log (WEATHER_URL);
         const fetch_response = await fetch(WEATHER_URL);
         const json = await fetch_response.json();
         response.json(json);

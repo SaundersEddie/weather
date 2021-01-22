@@ -44,14 +44,10 @@ The following technologies were used in this project along with VS Code
 
 ## APIs
 
-WeatherAPI was used to retrieve weather data, using the free tier availablke on their website.
+WeatherAPI was used to retrieve weather data, using the free tier available on their website.
 
 - Weather API  
   https://www.weatherapi.com/
-
-## Defects
-
-API data for Washington DC Geolocation is returing a Coastal Flood Warning from August 5th 2020, I have disabled Alerts while digging into how to supress this. It may simply be tied to using the DC Geolocation, using the Zipcode may not have this issue.
 
 ## Future Enhancement
 
