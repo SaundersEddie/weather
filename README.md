@@ -10,6 +10,7 @@ This page was put together to call external API from the node backend.
 - [API](#API)
 - [Defects](#Defects)
 - [Future Enhancement](#Future%20Enhancement)
+- [Updates](#Updates)
 - [Contribution](#Contribution)
 
 ## Project
@@ -57,6 +58,10 @@ A few things that can and will be cleaned up as I have time:
 - Clean up formatting
 - Allow local or backend storage of last 5 locations searched
 - Display alerts with a box or orange for watch and red for warning.
+
+## Updates
+
+22nd January 2021 - Patched packages. Mongoose and Axios security alerts.
 
 ## Contribution
 
